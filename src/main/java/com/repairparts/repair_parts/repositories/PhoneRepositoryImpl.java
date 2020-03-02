@@ -17,13 +17,13 @@ public class PhoneRepositoryImpl implements PhoneRepository {
     private List<PhoneEntity> phones;
 
     public PhoneRepositoryImpl(){
-        phones = new ArrayList<>();
     }
 
 
     @Override
     public PhoneEntity addPhone(PhoneEntity entity) {
 
+        PhoneEntity res = new PhoneEntity();
 
         if (ifExistsValue(entity.getBrand(), entity.getModel())) {
             System.out.println("Not Added");
@@ -50,7 +50,15 @@ public class PhoneRepositoryImpl implements PhoneRepository {
                 if (affectedRows > 0) {
                     try (ResultSet set = pstmt.getGeneratedKeys()) {
                         if (set.next()) {
-                            id = set.getString(1);
+                            if(set.getString(1)!=null) {
+                                res.setId(set.getString(1));
+                                res.setBrand(set.getString(2));
+                                res.setModel(set.getString(3));
+                                res.setAddedTime(set.getTimestamp(4).toLocalDateTime());
+                            }
+                            if(set.getTimestamp(5)!=null){
+                                res.setLastUpdateTime(set.getTimestamp(5).toLocalDateTime());
+                            }
                         }
                     } catch (SQLException ex) {
                         System.out.println(ex.getSQLState());
@@ -59,9 +67,7 @@ public class PhoneRepositoryImpl implements PhoneRepository {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            phones.add(entity);
-            int indx = phones.indexOf(entity);
-            return phones.get(indx);
+            return res;
         }
     }
 
@@ -107,7 +113,7 @@ public class PhoneRepositoryImpl implements PhoneRepository {
                 return false;
             }
         } catch (SQLException e) {
-            System.out.println("Error before check of database :" + e.getMessage());;
+            System.out.println("Error before check of database :" + e.getMessage());
         }
 
         //check values for contains. If contains i need to return true

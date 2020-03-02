@@ -8,13 +8,8 @@ import com.repairparts.repair_parts.utils.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -32,13 +27,17 @@ public class PhoneServiceImpl implements PhoneService {
         PhoneEntity entity = mapper.map(phoneRequestDto);
         entity.setId(UUID.randomUUID().toString());
         entity.setAddedTime(LocalDateTime.now());
-
         try {
-            phoneRepository.addPhone(entity);
+            PhoneEntity toResponse = phoneRepository.addPhone(entity);
+            if(toResponse.getId()!=null){
+                return mapper.map(entity);
+            }else{
+                return null;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return mapper.map(entity);
+        return null;
     }
 
     @Override
