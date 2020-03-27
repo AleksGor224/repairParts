@@ -5,6 +5,7 @@ import com.repairparts.repair_parts.dtos.PhoneResponseDto;
 import com.repairparts.repair_parts.entities.parents.PhoneEntity;
 import com.repairparts.repair_parts.exceptions.DataBaseConnectionException;
 import com.repairparts.repair_parts.exceptions.PhoneAlreadyExistsException;
+import com.repairparts.repair_parts.exceptions.PhoneNotFoundException;
 import com.repairparts.repair_parts.exceptions.WrongDataFormatException;
 import com.repairparts.repair_parts.repositories.PhoneRepository;
 import com.repairparts.repair_parts.utils.Mapper;
@@ -33,7 +34,7 @@ public class PhoneServiceImpl implements PhoneService {
     EntityManager entityManager;
 
     @Override
-    public Optional<PhoneResponseDto> addPhone(PhoneRequestDto phoneRequestDto) throws PhoneAlreadyExistsException, DataBaseConnectionException {
+    public PhoneResponseDto addPhone(PhoneRequestDto phoneRequestDto) throws PhoneAlreadyExistsException, DataBaseConnectionException {
 
         if(phoneRequestDto == null ||
                 (phoneRequestDto.getModel() == null|| phoneRequestDto.getModel().equals("")) ||
@@ -48,31 +49,37 @@ public class PhoneServiceImpl implements PhoneService {
         PhoneEntity entity = mapper.map(phoneRequestDto);
         entity.setId(UUID.randomUUID().toString());
         entity.setAddedTime(LocalDateTime.now());
-        try{
-            return Optional.of(mapper.map(phoneRepository.save(entity)));
-        }catch (Exception ex){
-            throw new DataBaseConnectionException("Wrong connection");
-        }
+        return Optional.of(mapper.map(phoneRepository.save(entity))).orElseThrow(()->new DataBaseConnectionException("Not saved. Check database connection"));
     }
 
     @Override
-    public Optional<PhoneResponseDto> updatePhoneWithId(String id, PhoneRequestDto phoneRequestDto) {
-        PhoneEntity entity = phoneRepository.findById(id);
-        if(phoneRequestDto.getBrand()!= null){
-            entity.setBrand(phoneRequestDto.getBrand());
-        }
-        if(phoneRequestDto.getModel()!=null){
-            entity.setModel(phoneRequestDto.getModel());
+    public PhoneResponseDto updatePhoneWithId(String id, PhoneRequestDto phoneRequestDto) throws DataBaseConnectionException {
+        PhoneEntity entity = null;
+        try {
+            entity = phoneRepository.findById(id);
+            if (phoneRequestDto.getBrand() != null) {
+                entity.setBrand(phoneRequestDto.getBrand());
+            }
+            if (phoneRequestDto.getModel() != null) {
+                entity.setModel(phoneRequestDto.getModel());
+            }
+        }catch (NullPointerException ex){
+            throw new PhoneNotFoundException("Phone Not Found");
         }
         entity.setLastUpdateTime(LocalDateTime.now());
-        return Optional.of(mapper.map(entityManager.merge(entity)));
+        return Optional.of(mapper.map(entityManager.merge(entity))).orElseThrow(()->new DataBaseConnectionException("Not saved. Check database connection"));
     }
 
     @Override
-    public Optional<PhoneResponseDto> removePhone(String id) {
-        PhoneEntity entity = phoneRepository.findById(id);
+    public PhoneResponseDto removePhone(String id) throws DataBaseConnectionException {
+        PhoneEntity entity = null;
+        try {
+            entity = phoneRepository.findById(id);
+        }catch (NullPointerException ex){
+            throw new PhoneNotFoundException("Phone Not Found");
+        }
         entityManager.remove(entity);
-        return Optional.of(mapper.map(entity));
+        return Optional.of(mapper.map(entity)).orElseThrow(()->new DataBaseConnectionException("Not removed. Check database connection"));
     }
 
     @Override
