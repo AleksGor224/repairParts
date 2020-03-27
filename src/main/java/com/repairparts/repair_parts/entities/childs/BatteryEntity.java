@@ -1,5 +1,6 @@
 package com.repairparts.repair_parts.entities.childs;
 
+import com.repairparts.repair_parts.entities.parents.PhoneEntity;
 import com.repairparts.repair_parts.entities.parents.RepairPartEntity;
 import lombok.*;
 
@@ -12,8 +13,8 @@ import lombok.*;
 public class BatteryEntity extends RepairPartEntity {
     private boolean orig;
 
-    public BatteryEntity(String brand, String model, String type, Integer amount, Integer requiredAmount, boolean orig){
-        super(brand, model, type, amount, requiredAmount);
+    public BatteryEntity(PhoneEntity entity, String type, Integer amount, Integer requiredAmount, boolean orig){
+        super(entity, type, amount, requiredAmount);
         this.orig = orig;
     }
 
@@ -31,11 +32,6 @@ public class BatteryEntity extends RepairPartEntity {
                 .append(super.getAddedTime().toString()+";")
                 .append(" \n")
                 .append("Brand: ")
-                .append(super.getBrand()+";")
-                .append(" \n")
-                .append("Model: ")
-                .append(super.getModel()+";")
-                .append(" \n")
                 .append("Type: ")
                 .append(super.getType()+";")
                 .append(" \n")

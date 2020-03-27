@@ -1,5 +1,6 @@
 package com.repairparts.repair_parts.entities.childs;
 
+import com.repairparts.repair_parts.entities.parents.PhoneEntity;
 import com.repairparts.repair_parts.entities.parents.RepairPartEntity;
 import lombok.*;
 
@@ -14,8 +15,8 @@ public class ScreenEntity extends RepairPartEntity {
     private String color = "black";
     private boolean orig = false;
 
-    public ScreenEntity(String brand, String model, String type, Integer amount, Integer requiredAmount, String color, boolean orig){
-        super(brand, model, type, amount, requiredAmount);
+    public ScreenEntity(PhoneEntity entity, String type, Integer amount, Integer requiredAmount, String color, boolean orig){
+        super(entity, type, amount, requiredAmount);
         this.color = color;
         this.orig = orig;
     }
@@ -33,10 +34,6 @@ public class ScreenEntity extends RepairPartEntity {
                 .append(super.getAddedTime().toString()+";")
                 .append(" \n")
                 .append("Brand: ")
-                .append(super.getBrand()+";")
-                .append(" \n")
-                .append("Model: ")
-                .append(super.getModel()+";")
                 .append(" \n")
                 .append("Type: ")
                 .append(super.getType()+";")

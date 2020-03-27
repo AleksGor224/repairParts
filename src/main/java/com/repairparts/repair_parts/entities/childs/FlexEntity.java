@@ -1,5 +1,6 @@
 package com.repairparts.repair_parts.entities.childs;
 
+import com.repairparts.repair_parts.entities.parents.PhoneEntity;
 import com.repairparts.repair_parts.entities.parents.RepairPartEntity;
 import lombok.*;
 
@@ -13,8 +14,8 @@ public class FlexEntity extends RepairPartEntity {
     private String flexType;
     private boolean orig;
 
-    public FlexEntity(String brand, String model, String type, Integer amount, Integer requiredAmount, String flexType, boolean orig){
-        super(brand, model, type, amount, requiredAmount);
+    public FlexEntity(PhoneEntity entity, String type, Integer amount, Integer requiredAmount, String flexType, boolean orig){
+        super(entity, type, amount, requiredAmount);
         this.flexType = flexType;
         this.orig = orig;
     }
@@ -33,13 +34,9 @@ public class FlexEntity extends RepairPartEntity {
                 .append(super.getAddedTime().toString()+";")
                 .append(" \n")
                 .append("Brand: ")
-                .append(super.getBrand()+";")
-                .append(" \n")
                 .append("Model: ")
                 .append("Type: ")
                 .append(super.getType()+";")
-                .append(" \n")
-                .append(super.getModel()+";")
                 .append(" \n")
                 .append("Amount: ")
                 .append(super.getAmount()+";")

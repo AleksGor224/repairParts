@@ -2,36 +2,40 @@ package com.repairparts.repair_parts.controllers;
 
 import com.repairparts.repair_parts.dtos.PhoneRequestDto;
 import com.repairparts.repair_parts.dtos.PhoneResponseDto;
+import com.repairparts.repair_parts.exceptions.DataBaseConnectionException;
+import com.repairparts.repair_parts.exceptions.PhoneAlreadyExistsException;
 import com.repairparts.repair_parts.services.PhoneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
+@RequestMapping("phone")
 public class PhoneControllerImpl implements PhoneController {
     @Autowired
     PhoneService phoneService;
     @Override
-    @PostMapping("addPhone")
-    public PhoneResponseDto addPhone(@RequestBody PhoneRequestDto phoneRequestDto) {
+    @PostMapping
+    public Optional<PhoneResponseDto> addPhone(@RequestBody PhoneRequestDto phoneRequestDto) throws PhoneAlreadyExistsException, DataBaseConnectionException {
         return phoneService.addPhone(phoneRequestDto);
     }
 
     @Override
-    @PostMapping("udpatePhone/{id}")
-    public PhoneResponseDto updatePhoneWithId(@PathVariable("id") String id,@RequestBody PhoneRequestDto phoneRequestDto) {
+    @PostMapping("{id}")
+    public Optional<PhoneResponseDto> updatePhoneWithId(@PathVariable("id") String id,@RequestBody PhoneRequestDto phoneRequestDto) {
         return phoneService.updatePhoneWithId(id,phoneRequestDto);
     }
 
     @Override
-    @DeleteMapping("deletePhone/{id}")
-    public boolean removePhone(@PathVariable("id") String id) {
+    @DeleteMapping("{id}")
+    public Optional<PhoneResponseDto> removePhone(@PathVariable("id") String id) {
         return phoneService.removePhone(id);
     }
 
     @Override
-    @GetMapping("getAll")
+    @GetMapping("all")
     public List<PhoneResponseDto> getAllPhones(){
         return phoneService.getAll();
     }
