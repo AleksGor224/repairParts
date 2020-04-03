@@ -1,4 +1,4 @@
-package com.repairparts.repair_parts.repositories;
+package com.repairparts.repair_parts.repositories.phone;
 
 import com.repairparts.repair_parts.entities.parents.PhoneEntity;
 import org.springframework.data.repository.Repository;

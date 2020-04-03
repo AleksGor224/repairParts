@@ -1,0 +1,19 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost/Phones
+    username: postgres
+    password: root
+
+db:
+  url: jdbc:postgresql://localhost/Phones
+  username: postgres
+  password: root

@@ -7,10 +7,8 @@ import com.repairparts.repair_parts.exceptions.DataBaseConnectionException;
 import com.repairparts.repair_parts.exceptions.PhoneAlreadyExistsException;
 import com.repairparts.repair_parts.exceptions.PhoneNotFoundException;
 import com.repairparts.repair_parts.exceptions.WrongDataFormatException;
-import com.repairparts.repair_parts.repositories.PhoneRepository;
+import com.repairparts.repair_parts.repositories.phone.PhoneRepository;
 import com.repairparts.repair_parts.utils.Mapper;
-import org.hibernate.Session;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,7 +52,7 @@ public class PhoneServiceImpl implements PhoneService {
 
     @Override
     public PhoneResponseDto updatePhoneWithId(String id, PhoneRequestDto phoneRequestDto) throws DataBaseConnectionException {
-        PhoneEntity entity = null;
+        PhoneEntity entity;
         try {
             entity = phoneRepository.findById(id);
             if (phoneRequestDto.getBrand() != null) {
@@ -72,7 +70,7 @@ public class PhoneServiceImpl implements PhoneService {
 
     @Override
     public PhoneResponseDto removePhone(String id) throws DataBaseConnectionException {
-        PhoneEntity entity = null;
+        PhoneEntity entity;
         try {
             entity = phoneRepository.findById(id);
         }catch (NullPointerException ex){

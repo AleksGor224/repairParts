@@ -13,6 +13,7 @@ import java.util.UUID;
 @ToString
 @Builder
 @Entity
+@Table(name = "repair_part_entity")
 public class RepairPartEntity {
 
     @Id

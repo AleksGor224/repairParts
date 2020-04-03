@@ -1,6 +1,5 @@
 package com.repairparts.repair_parts.configurations;
 
-import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -11,19 +10,21 @@ import javax.sql.DataSource;
 
 @Configuration
 public class JdbcConfig {
-//    @Value("${db.url}")
-//    String url;
-//    @Value("${db.username}")
-//    String username;
-//    @Value("${db.password}")
-//    String password;
+
+    @Value("${db.url}")
+    private String url;
+    @Value("${db.username}")
+    private String username;
+    @Value("${db.password}")
+    private String password;
+
 
     @Bean
     DataSource getHikariCp(){
         HikariDataSource source = new HikariDataSource();
-        source.setJdbcUrl("jdbc:postgresql://localhost:5432/Phones");
-        source.setUsername("postgres");
-        source.setPassword("root");
+        source.setJdbcUrl(url);
+        source.setUsername(username);
+        source.setPassword(password);
         return source;
     }
 }
