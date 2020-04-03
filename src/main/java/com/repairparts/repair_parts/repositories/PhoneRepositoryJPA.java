@@ -10,5 +10,6 @@ public interface PhoneRepositoryJPA extends Repository<PhoneEntity,String> {
     PhoneEntity save(PhoneEntity entity);
     PhoneEntity findById(String id);
     PhoneEntity removeById(String id);
+    PhoneEntity findByBrandAndModel(String brand,String model);
     List<PhoneEntity> findAll();
 }

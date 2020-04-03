@@ -9,11 +9,11 @@ public interface RepairPartsController {
 
     RepairPartResponseDto addRepairPart(RepairPartRequestDto dto);
     RepairPartResponseDto updateRepairPart(RepairPartRequestDto dto);
+    RepairPartResponseDto updateAmountById(String id, int amount);
     RepairPartResponseDto updateRepairPartById(String id);
-    RepairPartResponseDto deleteRepairPart(RepairPartRequestDto dto);
+    RepairPartResponseDto deleteRepairPartById(String id);
     List<RepairPartResponseDto> getAllByCategory(String category);
     List<RepairPartResponseDto> getAll();
     List<RepairPartResponseDto> getAllForOrderByCategory(String category);
     List<RepairPartResponseDto> getAllForOrder();
-
 }
