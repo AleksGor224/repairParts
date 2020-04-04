@@ -4,8 +4,7 @@ import com.repairparts.repair_parts.entities.parents.PhoneEntity;
 import com.repairparts.repair_parts.entities.parents.RepairPartEntity;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,9 +12,13 @@ import javax.persistence.Table;
 @Setter
 @ToString
 @Builder(builderMethodName = "childBuilder")
+@Entity
 @Table(name = "Displays")
-public class ScreenEntity extends RepairPartEntity {
+public class DisplayEntity extends RepairPartEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
     @Column(name = "color")
     @Builder.Default
     private String color = "black";
@@ -23,8 +26,8 @@ public class ScreenEntity extends RepairPartEntity {
     @Builder.Default
     private boolean orig = false;
 
-    public ScreenEntity(PhoneEntity entity, String type, Integer amount, Integer requiredAmount, String color, boolean orig){
-        super(entity, type, amount, requiredAmount);
+    public DisplayEntity(PhoneEntity phoneEntity, String type, Integer amount, Integer requiredAmount, String color, boolean orig){
+        super(phoneEntity, type, amount, requiredAmount);
         this.color = color;
         this.orig = orig;
     }

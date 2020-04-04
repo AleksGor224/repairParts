@@ -19,15 +19,20 @@ public class PhoneEntity {
     @Id
     @Column(name = "entity_id")
     private String id;
+
     @Column(name = "phone_added_time")
     private LocalDateTime addedTime;
+
     @Column(name = "update_time")
     private LocalDateTime lastUpdateTime;
+
     @Column(name = "brand")
     private String brand;
+
     @Column(name = "model")
     private String model;
+
     @Column(name = "model_repair_parts")
-    @OneToMany(mappedBy="phoneEntity",fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = PhoneEntity.class,cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
     private List<RepairPartEntity> repairPartEntities;
 }

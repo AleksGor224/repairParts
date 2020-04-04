@@ -6,12 +6,28 @@ import com.repairparts.repair_parts.exceptions.DataBaseConnectionException;
 import com.repairparts.repair_parts.exceptions.RepairPartAlreadyExists;
 import com.repairparts.repair_parts.exceptions.RepairPartNotFoundException;
 import com.repairparts.repair_parts.exceptions.WrongDataFormatException;
+import com.repairparts.repair_parts.repositories.repairParts.JPAs.RPBatteriesJPA;
+import com.repairparts.repair_parts.repositories.repairParts.interfaces.BackRepository;
+import com.repairparts.repair_parts.repositories.repairParts.interfaces.BatteryRepository;
+import com.repairparts.repair_parts.repositories.repairParts.interfaces.DisplayRepository;
+import com.repairparts.repair_parts.repositories.repairParts.interfaces.FlexRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class RepairPartServiceImpl implements RepairPartsService {
+
+    @Autowired
+    BatteryRepository batteriesRepository;
+    @Autowired
+    DisplayRepository displayRepository;
+    @Autowired
+    FlexRepository flexRepository;
+    @Autowired
+    BackRepository backRepository;
+
     @Override
     public RepairPartResponseDto addRepairPart(RepairPartRequestDto dto) throws RepairPartAlreadyExists, DataBaseConnectionException {
         return null;

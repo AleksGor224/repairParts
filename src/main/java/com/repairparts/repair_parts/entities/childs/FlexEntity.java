@@ -4,8 +4,7 @@ import com.repairparts.repair_parts.entities.parents.PhoneEntity;
 import com.repairparts.repair_parts.entities.parents.RepairPartEntity;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,15 +12,20 @@ import javax.persistence.Table;
 @Setter
 @ToString
 @Builder(builderMethodName = "childBuilder")
+@Entity
 @Table(name = "Flexes")
 public class FlexEntity extends RepairPartEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
     @Column(name = "type")
     private String flexType;
     @Column(name = "orig")
     private boolean orig;
 
-    public FlexEntity(PhoneEntity entity, String type, Integer amount, Integer requiredAmount, String flexType, boolean orig){
-        super(entity, type, amount, requiredAmount);
+    public FlexEntity(PhoneEntity phoneEntity, String type, Integer amount, Integer requiredAmount, String flexType, boolean orig){
+        super(phoneEntity, type, amount, requiredAmount);
         this.flexType = flexType;
         this.orig = orig;
     }
