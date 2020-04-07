@@ -9,6 +9,7 @@ import com.repairparts.repair_parts.exceptions.PhoneNotFoundException;
 import com.repairparts.repair_parts.exceptions.WrongDataFormatException;
 import com.repairparts.repair_parts.repositories.phone.PhoneRepository;
 import com.repairparts.repair_parts.utils.Mapper;
+import com.repairparts.repair_parts.utils.mappers.PhoneEntityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,14 +45,14 @@ public class PhoneServiceImpl implements PhoneService {
                 throw new PhoneAlreadyExistsException("Phone already exists");
             }
         }
-        PhoneEntity entity = mapper.map(phoneRequestDto);
+        PhoneEntity entity = PhoneEntityMapper.INSTANCE.map(phoneRequestDto);
         entity.setId(UUID.randomUUID().toString());
         entity.setAddedTime(LocalDateTime.now());
-        return Optional.of(mapper.map(phoneRepository.save(entity))).orElseThrow(()->new DataBaseConnectionException("Not saved. Check database connection"));
+        return Optional.of(PhoneEntityMapper.INSTANCE.map(phoneRepository.save(entity))).orElseThrow(()->new DataBaseConnectionException("Not saved. Check database connection"));
     }
 
     @Override
-    public PhoneResponseDto updatePhoneWithId(String id, PhoneRequestDto phoneRequestDto) throws DataBaseConnectionException {
+    public PhoneResponseDto updatePhoneWithId(java.lang.String id, PhoneRequestDto phoneRequestDto) throws DataBaseConnectionException {
         PhoneEntity entity;
         try {
             entity = phoneRepository.findById(id);
@@ -65,11 +66,11 @@ public class PhoneServiceImpl implements PhoneService {
             throw new PhoneNotFoundException("Phone Not Found");
         }
         entity.setLastUpdateTime(LocalDateTime.now());
-        return Optional.of(mapper.map(entityManager.merge(entity))).orElseThrow(()->new DataBaseConnectionException("Not saved. Check database connection"));
+        return Optional.of(PhoneEntityMapper.INSTANCE.map(entityManager.merge(entity))).orElseThrow(()->new DataBaseConnectionException("Not saved. Check database connection"));
     }
 
     @Override
-    public PhoneResponseDto removePhone(String id) throws DataBaseConnectionException {
+    public PhoneResponseDto removePhone(java.lang.String id) throws DataBaseConnectionException {
         PhoneEntity entity;
         try {
             entity = phoneRepository.findById(id);
@@ -77,13 +78,13 @@ public class PhoneServiceImpl implements PhoneService {
             throw new PhoneNotFoundException("Phone Not Found");
         }
         entityManager.remove(entity);
-        return Optional.of(mapper.map(entity)).orElseThrow(()->new DataBaseConnectionException("Not removed. Check database connection"));
+        return Optional.of(PhoneEntityMapper.INSTANCE.map(entity)).orElseThrow(()->new DataBaseConnectionException("Not removed. Check database connection"));
     }
 
     @Override
 
     public List<PhoneResponseDto> getAll() {
-        return phoneRepository.findAll().stream().map((e)->mapper.map(e)).collect(Collectors.toList());
+        return phoneRepository.findAll().stream().map(PhoneEntityMapper.INSTANCE::map).collect(Collectors.toList());
     }
 
 

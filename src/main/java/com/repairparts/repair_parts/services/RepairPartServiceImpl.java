@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Service
 public class RepairPartServiceImpl implements RepairPartsService {
 
@@ -30,6 +31,7 @@ public class RepairPartServiceImpl implements RepairPartsService {
 
     @Override
     public RepairPartResponseDto addRepairPart(RepairPartRequestDto dto) throws RepairPartAlreadyExists, DataBaseConnectionException {
+
         return null;
     }
 
@@ -72,4 +74,6 @@ public class RepairPartServiceImpl implements RepairPartsService {
     public List<RepairPartResponseDto> getAllForOrder() throws DataBaseConnectionException {
         return null;
     }
+
+
 }

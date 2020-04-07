@@ -25,6 +25,9 @@ public class RepairPartEntity {
     @Column(name = "added_time")
     private LocalDateTime addedTime;
 
+    @Column(name = "last_update_time")
+    private LocalDateTime updateTime;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "entity_id")
     private PhoneEntity phoneEntityId;
