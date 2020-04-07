@@ -12,30 +12,40 @@ import java.util.UUID;
 @Getter
 @ToString
 @Builder
-@Entity
 @Table(name = "repair_part_entity")
 public class RepairPartEntity {
+
+    public static final String PARENT = "RepairPartEntity[PhoneEntity]";
+
 
     @Id
     @Column(name = "id")
     private String id;
+
     @Column(name = "added_time")
     private LocalDateTime addedTime;
-    @JoinColumn(name = "phone_entity")
-    @ManyToOne()
-    private PhoneEntity phoneEntity;
+
+    @Column(name = "last_update_time")
+    private LocalDateTime updateTime;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "entity_id")
+    private PhoneEntity phoneEntityId;
+
     @Column(name = "type")
     private String type;
+
     @Column(name = "amount")
     private Integer amount;
+
     @Column(name = "required_amount")
     private Integer requiredAmount;
 
-    public RepairPartEntity(PhoneEntity phoneEntity,String type, Integer amount, Integer requiredAmount){
+    public RepairPartEntity(PhoneEntity phoneEntity, String type, Integer amount, Integer requiredAmount){
         String id = UUID.randomUUID().toString();
         LocalDateTime time = LocalDateTime.now();
         this.id = id;
-        this.phoneEntity = phoneEntity;
+        this.phoneEntityId = phoneEntity;
         this.addedTime = time;
         this.type = type;
         this.amount = amount;

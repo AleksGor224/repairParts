@@ -4,8 +4,7 @@ import com.repairparts.repair_parts.entities.parents.PhoneEntity;
 import com.repairparts.repair_parts.entities.parents.RepairPartEntity;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,13 +12,18 @@ import javax.persistence.Table;
 @Setter
 @ToString
 @Builder(builderMethodName = "childBuilder")
+@Entity
 @Table(name = "Batteries")
 public class BatteryEntity extends RepairPartEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
     @Column(name = "orig")
     private boolean orig;
 
-    public BatteryEntity(PhoneEntity entity, String type, Integer amount, Integer requiredAmount, boolean orig){
-        super(entity, type, amount, requiredAmount);
+    public BatteryEntity(PhoneEntity phoneEntity, String type, Integer amount, Integer requiredAmount, boolean orig){
+        super(phoneEntity, type, amount, requiredAmount);
         this.orig = orig;
     }
 }
