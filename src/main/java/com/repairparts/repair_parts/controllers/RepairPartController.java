@@ -17,13 +17,14 @@ public class RepairPartController implements RepairPartsController {
 
     @Override
     @PostMapping
-    public RepairPartResponseDto addRepairPart(RepairPartRequestDto dto) {
+    public RepairPartResponseDto addRepairPart(@RequestBody RepairPartRequestDto dto) {
+        System.out.println(dto.toString());
         return repairPartsService.addRepairPart(dto);
     }
 
     @Override
     @PostMapping("upd")
-    public RepairPartResponseDto updateRepairPart(RepairPartRequestDto dto) {
+    public RepairPartResponseDto updateRepairPart(@RequestBody RepairPartRequestDto dto) {
         return repairPartsService.updateRepairPart(dto);
     }
 

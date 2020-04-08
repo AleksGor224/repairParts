@@ -6,17 +6,11 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
+@RequiredArgsConstructor
 @Getter
-@ToString
-@Builder
-@Table(name = "repair_part_entity")
-public class RepairPartEntity {
+@Setter
 
-    public static final String PARENT = "RepairPartEntity[PhoneEntity]";
-
+public abstract class RepairPartEntity {
 
     @Id
     @Column(name = "id")
@@ -30,7 +24,7 @@ public class RepairPartEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "entity_id")
-    private PhoneEntity phoneEntityId;
+    private PhoneEntity phoneEntity;
 
     @Column(name = "type")
     private String type;
@@ -45,7 +39,7 @@ public class RepairPartEntity {
         String id = UUID.randomUUID().toString();
         LocalDateTime time = LocalDateTime.now();
         this.id = id;
-        this.phoneEntityId = phoneEntity;
+        this.phoneEntity = phoneEntity;
         this.addedTime = time;
         this.type = type;
         this.amount = amount;

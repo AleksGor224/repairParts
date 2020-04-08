@@ -12,12 +12,12 @@ import com.repairparts.repair_parts.entities.parents.PhoneEntity;
 import com.repairparts.repair_parts.entities.parents.RepairPartEntity;
 
 public interface Mapper {
-
-    PhoneEntity map(PhoneRequestDto dto);
-    PhoneResponseDto map(PhoneEntity entity);
-    RepairPartEntity map(RepairPartRequestDto dto);
-    RepairPartResponseDto mapFromBat(BatteryEntity entity);
-    RepairPartResponseDto mapFromFlex(FlexEntity entity);
-    RepairPartResponseDto mapFromDisp(DisplayEntity entity);
-    RepairPartResponseDto mapFromBack(BackEntity entity);
+//
+//    PhoneEntity map(PhoneRequestDto dto);
+//    PhoneResponseDto map(PhoneEntity entity);
+//    RepairPartEntity map(RepairPartRequestDto dto);
+//    RepairPartResponseDto mapFromBat(BatteryEntity entity);
+//    RepairPartResponseDto mapFromFlex(FlexEntity entity);
+//    RepairPartResponseDto mapFromDisp(DisplayEntity entity);
+//    RepairPartResponseDto mapFromBack(BackEntity entity);
 }

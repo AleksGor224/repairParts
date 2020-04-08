@@ -6,12 +6,12 @@ import lombok.*;
 
 import javax.persistence.*;
 
+@RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @ToString
-@Builder(builderMethodName = "childBuilder")
+@Builder
 @Entity
 @Table(name = "Displays")
 public class DisplayEntity extends RepairPartEntity {

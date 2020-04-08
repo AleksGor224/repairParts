@@ -15,7 +15,8 @@ public class RepairPartResponseDto {
 
     private String id;
     private LocalDateTime addedTime;
-    private LocalDateTime lastUpdateTime;
+    private LocalDateTime updateTime;
+    private String phoneEntityId;
     private String brand;
     private String model;
     private String type;
